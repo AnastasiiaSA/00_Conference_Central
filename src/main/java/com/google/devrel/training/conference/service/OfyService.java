@@ -21,9 +21,7 @@ public class OfyService {
      * above static block is executed before using Objectify.
      * @return Objectify service object.
      */
-    public static Objectify ofy() {
-        return ObjectifyService.ofy();
-    }
+    public static Objectify ofy() { return ObjectifyService.ofy(); }
 
     /**
      * Use this static method for getting the Objectify service factory.
