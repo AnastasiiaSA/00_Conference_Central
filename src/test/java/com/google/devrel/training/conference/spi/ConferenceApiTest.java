@@ -4,6 +4,7 @@ import static com.google.devrel.training.conference.service.OfyService.ofy;
 import static org.junit.Assert.*;
 
 import com.google.api.server.spi.response.UnauthorizedException;
+import com.google.api.server.spi.response.NotFoundException;
 import com.google.appengine.api.users.User;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
@@ -23,6 +24,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.inject.Named;
+
 
 /**
  * Tests for ConferenceApi API methods.
@@ -414,14 +417,36 @@ public Collection<Conference> getConferencesToAttend(final User user)
         // Get the value of the profile's conferenceKeysToAttend property
         List<String> keyStringsToAttend = profile.getConferenceKeysToAttend();
         // change this
-
+        List<Key<Conference>> keysToAttend = new ArrayList<>();
+            for (String keyString : keyStringsToAttend) {
+            keysToAttend.add(Key.<Conference>create(keyString));
+        }
+        return ofy().load().keys(keysToAttend).values();
+        }
         // TODO
         // Iterate over keyStringsToAttend,
         // and return a Collection of the
         // Conference entities that the user has registered to atend
-        
+
 
         return null;  // change this
+/**
+ * Unregister from the specified Conference.     *
+ * @param user An user who invokes this method, null when the user is not signed in.
+ * @param websafeConferenceKey The String representation of the Conference Key to unregister  from.
+ * @return Boolean true when success, otherwise false.
+ * @throws UnauthorizedException when the user is not signed in.
+ * @throws NotFoundException when there is no Conference with the given conferenceId.
+ */
+    @ApiMethod(
+        name = "unregisterFromConference",
+        path = "conference/{websafeConferenceKey}/registration",
+        httpMethod = HttpMethod.DELETE)
+public WrappedBoolean unregisterFromConference(
+final User user,
+@Named("websafeConferenceKey") final String websafeConferenceKey
+        ) throws UnauthorizedException, NotFoundException, ForbiddenException, ConflictException {
+        }
         }
 
     /*
