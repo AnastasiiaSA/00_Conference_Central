@@ -1,6 +1,6 @@
 package com.google.devrel.training.conference.service;
 
-import com.google.devrel.training.conference.domain.Profile;
+import com.google.devrel.training.conference.domain.Conference;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyFactory;
 import com.googlecode.objectify.ObjectifyService;
@@ -13,7 +13,7 @@ public class OfyService {
      * This static block ensure the entity registration.
      */
     static {
-        factory().register(Profile.class);
+        factory().register(Conference.class);
     }
 
     /**
